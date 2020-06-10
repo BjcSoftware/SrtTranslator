@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SrtTranslator.ConsoleApplication", "SrtTranslator\SrtTranslator.ConsoleApplication.csproj", "{CEC52558-D7BD-43B1-AB77-D38D9FDAEDDD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SrtSubtitleFileParser.Tests", "SubtitleFileParser\SrtSubtitleFileParser.Tests\SrtSubtitleFileParser.Tests.csproj", "{4FD7F3D4-5968-429A-8DB4-DF9EC149EE24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SubtitleFileParser", "SubtitleFileParser", "{D687CD00-58C7-4C6E-BD47-7D4CF4C7BD7D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SrtSubtitleFileParser", "SubtitleFileParser\SrtSubtitleFileParser\SrtSubtitleFileParser.csproj", "{694875E0-D3AE-4FD9-B509-D0228E16DF9A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubtitleFileParser.Core", "SubtitleFileParser\SubtitleFileParser.Core\SubtitleFileParser.Core.csproj", "{EF9D9863-7D20-4E4C-859B-B72BDADA9B83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubtitleFileParser.Core.Tests", "SubtitleFileParser\SubtitleFileParser.Core.Tests\SubtitleFileParser.Core.Tests.csproj", "{2CF85A82-A69B-451D-9A7D-4B111F2183D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CEC52558-D7BD-43B1-AB77-D38D9FDAEDDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEC52558-D7BD-43B1-AB77-D38D9FDAEDDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEC52558-D7BD-43B1-AB77-D38D9FDAEDDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEC52558-D7BD-43B1-AB77-D38D9FDAEDDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FD7F3D4-5968-429A-8DB4-DF9EC149EE24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FD7F3D4-5968-429A-8DB4-DF9EC149EE24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FD7F3D4-5968-429A-8DB4-DF9EC149EE24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FD7F3D4-5968-429A-8DB4-DF9EC149EE24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{694875E0-D3AE-4FD9-B509-D0228E16DF9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{694875E0-D3AE-4FD9-B509-D0228E16DF9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{694875E0-D3AE-4FD9-B509-D0228E16DF9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{694875E0-D3AE-4FD9-B509-D0228E16DF9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF9D9863-7D20-4E4C-859B-B72BDADA9B83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF9D9863-7D20-4E4C-859B-B72BDADA9B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF9D9863-7D20-4E4C-859B-B72BDADA9B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF9D9863-7D20-4E4C-859B-B72BDADA9B83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CF85A82-A69B-451D-9A7D-4B111F2183D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CF85A82-A69B-451D-9A7D-4B111F2183D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CF85A82-A69B-451D-9A7D-4B111F2183D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CF85A82-A69B-451D-9A7D-4B111F2183D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4FD7F3D4-5968-429A-8DB4-DF9EC149EE24} = {D687CD00-58C7-4C6E-BD47-7D4CF4C7BD7D}
+		{694875E0-D3AE-4FD9-B509-D0228E16DF9A} = {D687CD00-58C7-4C6E-BD47-7D4CF4C7BD7D}
+		{EF9D9863-7D20-4E4C-859B-B72BDADA9B83} = {D687CD00-58C7-4C6E-BD47-7D4CF4C7BD7D}
+		{2CF85A82-A69B-451D-9A7D-4B111F2183D0} = {D687CD00-58C7-4C6E-BD47-7D4CF4C7BD7D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC829919-835D-4E22-AFD6-A33E41C69FA5}
+	EndGlobalSection
+EndGlobal
