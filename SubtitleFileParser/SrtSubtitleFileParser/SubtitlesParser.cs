@@ -1,7 +1,7 @@
 ﻿using SubtitleFileParser.Core;
 using SubtitleFileParser.Core.Exceptions;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace SrtSubtitleFileParser
 {
@@ -21,23 +21,32 @@ namespace SrtSubtitleFileParser
 
         public Subtitles Parse(UnvalidatedSubtitles unvalidatedSubtitles)
         {
-            return new Subtitles(
-                unvalidatedSubtitles.Value
-                .Select(
-                    s => ParseUnvalidatedSubtitle(s))
-                .ToList());
+            if (unvalidatedSubtitles == null)
+                throw new ArgumentNullException(nameof(unvalidatedSubtitles));
+
+            return ParseSubtitles(unvalidatedSubtitles);
         }
 
-        private Subtitle ParseUnvalidatedSubtitle(UnvalidatedSubtitle subtitle)
+        public Subtitles ParseSubtitles(UnvalidatedSubtitles unvalidatedSubtitles)
         {
-            try
+            var subtitles = new List<Subtitle>();
+            int currentLine = 1;
+            foreach (var subtitle in unvalidatedSubtitles.Value)
             {
-                return subtitleParser.Parse(subtitle);
+                try
+                {
+                    subtitles.Add(
+                        subtitleParser.Parse(subtitle));
+                }
+                catch (Exception)
+                {
+                    throw new SubtitlesParsingException(currentLine);
+                }
+
+                currentLine++;
             }
-            catch(Exception)
-            {
-                throw new ParsingException();
-            }
+
+            return new Subtitles(subtitles);
         }
     }
 }

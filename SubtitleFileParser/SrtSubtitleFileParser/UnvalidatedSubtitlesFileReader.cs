@@ -1,5 +1,4 @@
-﻿using SrtSubtitleFileParser.Exceptions;
-using SubtitleFileParser.Core;
+﻿using SubtitleFileParser.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,24 +19,15 @@ namespace SrtSubtitleFileParser
 
         public UnvalidatedSubtitles ReadUnvalidatedSubtitles(FilePath filePath)
         {
+            if (filePath == null)
+                throw new ArgumentNullException(nameof(filePath));
+
             return new UnvalidatedSubtitles(
-                ReadAllLines(filePath)
+                reader.ReadAllLines(filePath)
                 .Select(line => new CharacterLine(line))
                 .Split(new CharacterLine(string.Empty))
                 .Select(subtitle => new UnvalidatedSubtitle(subtitle))
                 .ToList());
-        }
-
-        private string[] ReadAllLines(FilePath filePath)
-        {
-            try
-            {
-                return reader.ReadAllLines(filePath);
-            }
-            catch (Exception)
-            {
-                throw new SubtitlesReadingException();
-            }
         }
     }
 

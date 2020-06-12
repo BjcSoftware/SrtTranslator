@@ -1,5 +1,4 @@
 ﻿using SubtitleFileParser.Core;
-using SubtitleFileParser.Core.Exceptions;
 using System;
 
 namespace SrtSubtitleFileParser
@@ -10,7 +9,7 @@ namespace SrtSubtitleFileParser
     {
         private readonly IUnvalidatedSubtitlesReader reader;
         private readonly ISubtitlesParser parser;
-
+        
         public SubtitlesFileParser(
             IUnvalidatedSubtitlesReader reader,
             ISubtitlesParser parser)
@@ -29,19 +28,8 @@ namespace SrtSubtitleFileParser
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
 
-            return parser.Parse(ReadSubtitlesToParse(filePath));
-        }
-
-        private UnvalidatedSubtitles ReadSubtitlesToParse(FilePath filePath)
-        {
-            try
-            {
-                return reader.ReadUnvalidatedSubtitles(filePath);
-            }
-            catch(Exception)
-            {
-                throw new ParsingException();
-            }
+            return parser.Parse(
+                reader.ReadUnvalidatedSubtitles(filePath));
         }
     }
 }

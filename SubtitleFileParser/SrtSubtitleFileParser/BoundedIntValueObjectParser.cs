@@ -25,12 +25,17 @@ namespace SrtSubtitleFileParser
             if (input == null)
                 throw new ArgumentNullException(nameof(input));
 
-            int value = intParser.Parse(input);
+            return CreateValueObject(
+                intParser.Parse(input));
+        }
+
+        private TResult CreateValueObject(int value)
+        {
             try
             {
                 return (TResult)Activator
                     .CreateInstance(
-                        typeof(TResult), 
+                        typeof(TResult),
                         new object[] { value });
             }
             catch (TargetInvocationException)

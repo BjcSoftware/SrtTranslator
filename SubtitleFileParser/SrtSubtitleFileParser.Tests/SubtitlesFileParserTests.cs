@@ -5,6 +5,7 @@ using SubtitleFileParser.Core;
 using SubtitleFileParser.Core.Exceptions;
 using SubtitleFileParser.Core.Tests;
 using System;
+using System.IO;
 
 namespace SrtSubtitleFileParser.Tests
 {
@@ -34,16 +35,6 @@ namespace SrtSubtitleFileParser.Tests
         }
 
         [Test]
-        public void Parse_NullFilePath_Throws()
-        {
-            var parser = CreateParser();
-            FilePath nullPath = null;
-
-            Assert.Throws<ArgumentNullException>(
-                () => parser.Parse(nullPath));
-        }
-
-        [Test]
         public void Parse_SuccessfulParsing_ReturnsSubtitles()
         {
             var expectedSubtitles = SubtitlesTests.CreateSubtitles1();
@@ -56,33 +47,47 @@ namespace SrtSubtitleFileParser.Tests
             var actualSubtitles = parser.Parse(new FilePath("file.srt"));
 
             Assert.AreEqual(
-                expectedSubtitles, 
+                expectedSubtitles,
                 actualSubtitles);
         }
 
         [Test]
-        public void Parse_ParserThrows_ThrowsParsingException()
+        public void Parse_NullFilePath_Throws()
         {
-            var stubSubtitlesParser = Substitute.For<ISubtitlesParser>();
-            stubSubtitlesParser
-                .Parse(Arg.Any<UnvalidatedSubtitles>())
-                .Throws<ParsingException>();
-            var parser = CreateParser(stubSubtitlesParser);
+            var parser = CreateParser();
+            FilePath nullPath = null;
 
-            Assert.Throws<ParsingException>(
-                () => parser.Parse(new FilePath("file.srt")));
+            Assert.Throws<ArgumentNullException>(
+                () => parser.Parse(nullPath));
         }
 
         [Test]
-        public void Parse_ReaderThrows_ThrowsParsingException()
+        public void Parse_ParserThrowsSubtitlesParsingException_ThrowsSameException()
+        {
+            var stubSubtitlesParser = Substitute.For<ISubtitlesParser>();
+            var expectedException = new SubtitlesParsingException();
+            stubSubtitlesParser
+                .Parse(Arg.Any<UnvalidatedSubtitles>())
+                .Throws(expectedException);
+            var parser = CreateParser(stubSubtitlesParser);
+
+            var actualException = Assert.Throws<SubtitlesParsingException>(
+                () => parser.Parse(new FilePath("file.srt")));
+            Assert.AreSame(
+                expectedException,
+                actualException);
+        }
+
+        [Test]
+        public void Parse_FileNotFound_ThrowsFileNotFoundException()
         {
             var stubReader = Substitute.For<IUnvalidatedSubtitlesReader>();
             stubReader
                 .ReadUnvalidatedSubtitles(Arg.Any<FilePath>())
-                .Throws<Exception>();
+                .Throws<FileNotFoundException>();
             var parser = CreateParser(stubReader);
 
-            Assert.Throws<ParsingException>(
+            Assert.Throws<FileNotFoundException>(
                 () => parser.Parse(new FilePath("file.srt")));
         }
 

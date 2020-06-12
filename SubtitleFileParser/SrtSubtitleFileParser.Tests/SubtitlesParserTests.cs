@@ -58,18 +58,50 @@ namespace SrtSubtitleFileParser.Tests
         }
 
         [Test]
-        public void Parse_SubtitleParserThrows_ThrowsParsingException()
+        public void Parse_NullUnvalidatedSubtitles_Throws()
         {
+            UnvalidatedSubtitles nullSubtitles = null;
+            var parser = CreateParser();
+
+            Assert.Throws<ArgumentNullException>(
+                () => parser.Parse(nullSubtitles));
+        }
+
+        [Test]
+        [TestCase(0, 1)]
+        [TestCase(1, 0)]
+        public void Parse_SubtitleParserThrows_ThrowsParsingException(
+            int indexOfCorrectSub,
+            int indexOfIncorrectSub)
+        {
+            var subsToParse = new UnvalidatedSubtitles(
+                new List<UnvalidatedSubtitle> {
+                    UnvalidatedSubtitleTests.CreateUnvalidatedSubtitle1(),
+                    UnvalidatedSubtitleTests.CreateUnvalidatedSubtitle2()
+                });
+
             var stubSubtitleParser = Substitute.For<ISubtitleParser>();
             stubSubtitleParser
-                .Parse(Arg.Any<UnvalidatedSubtitle>())
+                .Parse(Arg.Is(subsToParse.Value.ElementAt(indexOfCorrectSub)))
+                .Returns(SubtitleTests.CreateSubtitle1());
+
+            stubSubtitleParser
+                .Parse(Arg.Is(subsToParse.Value.ElementAt(indexOfIncorrectSub)))
                 .Throws<Exception>();
 
             var parser = CreateParser(stubSubtitleParser);
 
-            Assert.Throws<ParsingException>(
-                () => parser.Parse(
-                    UnvalidatedSubtitlesTests.CreateUnvalidatedSubtitles()));
+            var exception = Assert.Throws<SubtitlesParsingException>(
+                () => parser.Parse(subsToParse));
+            Assert.AreEqual(
+                indexOfIncorrectSub + 1,
+                exception.IncorrectSubtitleId);
+        }
+
+        private SubtitlesParser CreateParser()
+        {
+            return CreateParser(
+                Substitute.For<ISubtitleParser>());
         }
 
         private SubtitlesParser CreateParser(ISubtitleParser subtitleParser)

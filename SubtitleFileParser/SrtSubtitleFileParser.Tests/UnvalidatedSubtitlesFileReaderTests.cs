@@ -1,10 +1,10 @@
 ﻿using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
-using SrtSubtitleFileParser.Exceptions;
 using SubtitleFileParser.Core;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace SrtSubtitleFileParser.Tests
@@ -53,15 +53,24 @@ namespace SrtSubtitleFileParser.Tests
         }
 
         [Test]
-        public void ReadUnvalidatedSubtitles_ReaderThrows_ThrowsSubtitlesReadingException()
+        public void ReadUnvalidatedSubtitles_NullReader_Throws()
+        {
+            IFileLineReader nullReader = null;
+
+            Assert.Throws<ArgumentNullException>(
+                () => new UnvalidatedSubtitlesFileReader(nullReader));
+        }
+
+        [Test]
+        public void ReadUnvalidatedSubtitles_FileNotFound_ThrowsFileNotFoundException()
         {
             var stubReader = Substitute.For<IFileLineReader>();
             stubReader
                 .ReadAllLines(Arg.Any<FilePath>())
-                .Throws<Exception>();
+                .Throws<FileNotFoundException>();
             var reader = CreateReader(stubReader);
 
-            Assert.Throws<SubtitlesReadingException>(
+            Assert.Throws<FileNotFoundException>(
                 () => reader.ReadUnvalidatedSubtitles(new FilePath("a file")));
         }
 

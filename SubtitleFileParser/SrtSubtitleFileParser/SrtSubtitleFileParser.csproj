@@ -8,4 +8,8 @@
     <ProjectReference Include="..\SubtitleFileParser.Core\SubtitleFileParser.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
 </Project>

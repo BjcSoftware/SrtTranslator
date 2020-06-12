@@ -34,31 +34,34 @@ namespace SrtSubtitleFileParser.Tests
                     new CharacterLine("More text")
                 });
 
-            var timestamps = new SubtitleTimestamps(
+            var expectedTimestamps = new SubtitleTimestamps(
                 TimestampTests.CreateTimestamp(0, 0, 1, 100),
                 TimestampTests.CreateTimestamp(0, 0, 3, 200));
 
-            var parser = CreateParser(
-                CreateStubTimestampsParserReturning(timestamps));
-
-            var expected = new Subtitle(
-                timestamps,
-                new SubtitleText("Some text\nMore text"));
-
-            var actual = parser.Parse(unvalidatedSubtitle);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        private ISubtitleTimestampsParser CreateStubTimestampsParserReturning(
-            SubtitleTimestamps timestamps)
-        {
             var stubTimestampsParser = Substitute.For<ISubtitleTimestampsParser>();
             stubTimestampsParser
-                .Parse(Arg.Any<CharacterLine>())
-                .Returns(timestamps);
+                .Parse(Arg.Is(new CharacterLine("00:00:01,100 --> 00:00:03,200")))
+                .Returns(expectedTimestamps);
 
-            return stubTimestampsParser;
+            var parser = CreateParser(stubTimestampsParser);
+
+            var expectedSubtitle = new Subtitle(
+                expectedTimestamps,
+                new SubtitleText("Some text\nMore text"));
+
+            var actualSubtitle = parser.Parse(unvalidatedSubtitle);
+
+            Assert.AreEqual(expectedSubtitle, actualSubtitle);
+        }
+
+        [Test]
+        public void Parse_NullUnvalidatedSubtitle_Throws()
+        {
+            UnvalidatedSubtitle nullSubtitle = null;
+            var parser = CreateParser();
+
+            Assert.Throws<ArgumentNullException>(
+                () => parser.Parse(nullSubtitle));
         }
 
         [Test]
@@ -74,6 +77,36 @@ namespace SrtSubtitleFileParser.Tests
             Assert.Throws<ParsingException>(
                 () => parser.Parse(
                     UnvalidatedSubtitleTests.CreateUnvalidatedSubtitle1()));
+        }
+
+
+        private static object[] lessThanThreeLinesCases =
+        {
+            new object[] { new List<CharacterLine>() },
+            new object[] { new List<CharacterLine> {
+                new CharacterLine("First Line")
+            }},
+            new object[] { new List<CharacterLine> {
+                new CharacterLine("First Line"),
+                new CharacterLine("Second Line")
+            }}
+        };
+
+        [TestCaseSource(nameof(lessThanThreeLinesCases))]
+        public void Parse_LessThanThreeLinesSubtitle_ThrowsParsingException(List<CharacterLine> lines)
+        {
+            var subtitle = new UnvalidatedSubtitle(lines);
+
+            var parser = CreateParser();
+
+            Assert.Throws<ParsingException>(
+                () => parser.Parse(subtitle));
+        }
+
+        private SubtitleParser CreateParser()
+        {
+            return CreateParser(
+                Substitute.For<ISubtitleTimestampsParser>());
         }
 
         private SubtitleParser CreateParser(ISubtitleTimestampsParser timestampsParser)
