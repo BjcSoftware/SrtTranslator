@@ -7,5 +7,10 @@
             : base(milliseconds, new NumericRange(0, 999))
         {
         }
+
+        public override string ToString()
+        {
+            return $"{Value:000}";
+        }
     }
 }

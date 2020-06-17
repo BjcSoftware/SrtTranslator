@@ -5,14 +5,14 @@ using System.Reflection;
 
 namespace SrtTranslator.SubtitleFileParser
 {
-    public class BoundedIntValueObjectParser<TResult, TInput>
+    public class IntBasedValueObjectParser<TResult, TInput>
         : IParser<TResult, TInput>
-            where TResult : BoundedIntBasedValueObject
+            where TResult : ValueObject<int>
             where TInput : ValueObject<string>
     {
         private readonly IParser<int, TInput> intParser;
 
-        public BoundedIntValueObjectParser(IParser<int, TInput> intParser)
+        public IntBasedValueObjectParser(IParser<int, TInput> intParser)
         {
             if (intParser == null)
                 throw new ArgumentNullException(nameof(intParser));

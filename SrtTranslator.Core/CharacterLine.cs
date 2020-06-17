@@ -1,8 +1,7 @@
-﻿using SrtTranslator.Core;
-using System;
+﻿using System;
 using System.Linq;
 
-namespace SrtTranslator.SubtitleFileParser
+namespace SrtTranslator.Core
 {
     public class CharacterLine : ValueObject<string>
     {

@@ -1,9 +1,7 @@
 ﻿using NUnit.Framework;
-using SrtTranslator.Core;
-using SrtTranslator.Core.Tests;
 using System;
 
-namespace SrtTranslator.SubtitleFileParser.Tests
+namespace SrtTranslator.Core.Tests
 {
     [TestFixture]
     public class SubcharacterLineTests

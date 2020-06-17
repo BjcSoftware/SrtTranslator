@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SrtTranslator.Core;
 using SrtTranslator.SubtitleFileParser.Exceptions;
 using System;
 

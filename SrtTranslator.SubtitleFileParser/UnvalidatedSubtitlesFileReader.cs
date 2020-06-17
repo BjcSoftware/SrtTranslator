@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SrtTranslator.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,6 @@ namespace SrtTranslator.SubtitleFileParser
 
             return new UnvalidatedSubtitles(
                 reader.ReadAllLines(filePath)
-                .Select(line => new CharacterLine(line))
                 .Split(new CharacterLine(string.Empty))
                 .Select(subtitle => new UnvalidatedSubtitle(subtitle))
                 .ToList());

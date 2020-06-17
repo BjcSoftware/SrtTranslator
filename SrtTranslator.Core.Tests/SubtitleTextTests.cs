@@ -1,16 +1,24 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace SrtTranslator.Core.Tests
 {
     [TestFixture]
     public class SubtitleTextTests
-        : BaseNullableTypeBasedValueObjectTests<string>
+        : BaseEnumerableBasedValueObjectTests<CharacterLine>
     {
-        protected override string Value1 => "a line\nanother line";
+        protected override IEnumerable<CharacterLine> value1 => 
+            new List<CharacterLine> {
+                new CharacterLine("a line"),
+                new CharacterLine("another line")
+            };
 
-        protected override string Value2 => "some other line";
+        protected override IEnumerable<CharacterLine> value2 =>
+            new List<CharacterLine> {
+                new CharacterLine("some other line")
+            };
 
-        protected override ValueObject<string> CreateValueObject(string value)
+        protected override EnumerableBasedValueObject<CharacterLine> CreateValueObject(IEnumerable<CharacterLine> value)
         {
             return new SubtitleText(value);
         }

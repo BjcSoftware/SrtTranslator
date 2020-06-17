@@ -1,10 +1,17 @@
-﻿namespace SrtTranslator.SubtitleFileParser
+﻿using SrtTranslator.Core;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace SrtTranslator.SubtitleFileParser
 {
     public class FileLineReader : IFileLineReader
     {
-        public string[] ReadAllLines(FilePath filePath)
+        public List<CharacterLine> ReadAllLines(FilePath filePath)
         {
-            return System.IO.File.ReadAllLines(filePath.Value);
+            return File.ReadAllLines(filePath.Value)
+                .Select(s => new CharacterLine(s))
+                .ToList();
         }
     }
 }

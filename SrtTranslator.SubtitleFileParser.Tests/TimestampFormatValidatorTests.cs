@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SrtTranslator.Core;
 
 namespace SrtTranslator.SubtitleFileParser.Tests
 {

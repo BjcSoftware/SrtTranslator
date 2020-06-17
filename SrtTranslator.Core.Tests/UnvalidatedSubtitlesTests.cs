@@ -1,25 +1,17 @@
 ﻿using NUnit.Framework;
-using SrtTranslator.Core;
-using SrtTranslator.Core.Tests;
 using System.Collections.Generic;
 
-namespace SrtTranslator.SubtitleFileParser.Tests
+namespace SrtTranslator.Core.Tests
 {
     [TestFixture]
     public class UnvalidatedSubtitlesTests
         : BaseEnumerableBasedValueObjectTests<UnvalidatedSubtitle>
     {
         protected override IEnumerable<UnvalidatedSubtitle> value1 => 
-            new List<UnvalidatedSubtitle> {
-                UnvalidatedSubtitleTests.CreateUnvalidatedSubtitle1(),
-                UnvalidatedSubtitleTests.CreateUnvalidatedSubtitle2()
-            };
+            CreateUnvalidatedSubtitles1().Value;
 
-        protected override IEnumerable<UnvalidatedSubtitle> value2 => 
-            new List<UnvalidatedSubtitle> {
-                UnvalidatedSubtitleTests.CreateUnvalidatedSubtitle2(),
-                UnvalidatedSubtitleTests.CreateUnvalidatedSubtitle1()
-            };
+        protected override IEnumerable<UnvalidatedSubtitle> value2 =>
+            CreateUnvalidatedSubtitles2().Value;
 
         protected override EnumerableBasedValueObject<UnvalidatedSubtitle> CreateValueObject(
             IEnumerable<UnvalidatedSubtitle> value)
@@ -27,12 +19,21 @@ namespace SrtTranslator.SubtitleFileParser.Tests
             return new UnvalidatedSubtitles(value);
         }
 
-        public static UnvalidatedSubtitles CreateUnvalidatedSubtitles()
+        public static UnvalidatedSubtitles CreateUnvalidatedSubtitles1()
         {
             return new UnvalidatedSubtitles(
                 new List<UnvalidatedSubtitle> {
                     UnvalidatedSubtitleTests.CreateUnvalidatedSubtitle1(),
                     UnvalidatedSubtitleTests.CreateUnvalidatedSubtitle2()
+                });
+        }
+
+        public static UnvalidatedSubtitles CreateUnvalidatedSubtitles2()
+        {
+            return new UnvalidatedSubtitles(
+                new List<UnvalidatedSubtitle> {
+                    UnvalidatedSubtitleTests.CreateUnvalidatedSubtitle2(),
+                    UnvalidatedSubtitleTests.CreateUnvalidatedSubtitle1()
                 });
         }
     }

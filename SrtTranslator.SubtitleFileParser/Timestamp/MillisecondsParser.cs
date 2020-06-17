@@ -3,7 +3,7 @@ using System;
 
 namespace SrtTranslator.SubtitleFileParser
 {
-    using BoundedIntParser = BoundedIntValueObjectParser<MillisecondsTimestamp, SubcharacterLine>;
+    using BoundedIntParser = IntBasedValueObjectParser<MillisecondsTimestamp, SubcharacterLine>;
 
     public class MillisecondsParser
         : IParser<MillisecondsTimestamp, SubcharacterLine>

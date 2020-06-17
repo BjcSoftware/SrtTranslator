@@ -8,7 +8,7 @@ using System;
 namespace SrtTranslator.SubtitleFileParser.Tests
 {
     using IIntParser = IParser<int, SubcharacterLine>;
-    using Bounded0To10IntValueObjectParser = BoundedIntValueObjectParser<IntBetween0And10ValueObject, SubcharacterLine>;
+    using Bounded0To10IntValueObjectParser = IntBasedValueObjectParser<IntBetween0And10ValueObject, SubcharacterLine>;
     using Input = SubcharacterLine;
 
     [TestFixture]

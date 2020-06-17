@@ -1,4 +1,6 @@
-﻿namespace SrtTranslator.SubtitleFileParser
+﻿using SrtTranslator.Core;
+
+namespace SrtTranslator.SubtitleFileParser
 {
     public interface IUnvalidatedSubtitlesReader
     {

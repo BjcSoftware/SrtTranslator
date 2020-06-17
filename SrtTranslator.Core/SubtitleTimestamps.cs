@@ -15,7 +15,9 @@ namespace SrtTranslator.Core
                 throw new ArgumentNullException(nameof(end));
 
             if (end.IsBefore(start))
-                throw new ArgumentException();
+                throw new ArgumentException(
+                    "End of SubtitleTimestamps should be after Start",
+                    nameof(end));
 
             Start = start;
             End = end;
@@ -31,6 +33,11 @@ namespace SrtTranslator.Core
         public override int GetHashCode()
         {
             return HashCode.Combine(Start, End);
+        }
+
+        public override string ToString()
+        {
+            return $"{Start} -> {End}";
         }
     }
 }

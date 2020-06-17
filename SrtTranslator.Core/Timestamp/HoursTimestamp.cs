@@ -7,5 +7,10 @@
             : base(hours, new NumericRange(0, 99))
         {
         }
+
+        public override string ToString()
+        {
+            return $"{Value:00}";
+        }
     }
 }

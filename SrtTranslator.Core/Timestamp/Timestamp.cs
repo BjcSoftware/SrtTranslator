@@ -55,5 +55,10 @@ namespace SrtTranslator.Core
                 Seconds.GetHashCode() ^
                 Milliseconds.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return $"{Hours}:{Minutes}:{Seconds},{Milliseconds}";
+        }
     }
 }

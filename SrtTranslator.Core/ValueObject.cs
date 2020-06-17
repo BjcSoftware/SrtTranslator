@@ -24,5 +24,10 @@ namespace SrtTranslator.Core
         {
             return HashCode.Combine(Value);
         }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace SrtTranslator.Core
+﻿using System.Collections.Generic;
+
+namespace SrtTranslator.Core
 {
-    public class SubtitleText : ValueObject<string>
+    public class SubtitleText : EnumerableBasedValueObject<CharacterLine>
     {
-        public SubtitleText(string text)
+        public SubtitleText(IEnumerable<CharacterLine> text)
             : base(text)
         {
         }

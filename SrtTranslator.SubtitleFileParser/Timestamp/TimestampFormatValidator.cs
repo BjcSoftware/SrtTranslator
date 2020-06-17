@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using SrtTranslator.Core;
+using System.Text.RegularExpressions;
 
 namespace SrtTranslator.SubtitleFileParser
 {

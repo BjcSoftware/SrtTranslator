@@ -73,6 +73,13 @@ namespace SrtTranslator.Core.Tests
             Assert.IsFalse(t1.Equals(t2));
         }
 
+        public static SubtitleTimestamps CreateTimestamps()
+        {
+            return new SubtitleTimestamps(
+                TimestampTests.CreateTimestamp(1, 2, 3, 200),
+                TimestampTests.CreateTimestamp(5, 2, 3, 200));
+        }
+
         private Timestamp CreateStubTimestamp()
         {
             return new Timestamp(

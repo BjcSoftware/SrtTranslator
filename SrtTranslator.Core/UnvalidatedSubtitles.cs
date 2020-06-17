@@ -1,7 +1,6 @@
-﻿using SrtTranslator.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace SrtTranslator.SubtitleFileParser
+namespace SrtTranslator.Core
 {
     public class UnvalidatedSubtitles 
         : EnumerableBasedValueObject<UnvalidatedSubtitle>

@@ -27,13 +27,5 @@ namespace SrtTranslator.Core.Tests
             Assert.Catch<ArgumentOutOfRangeException>(
                 () => CreateValueObject(outOfRangeValue));
         }
-
-        [Test]
-        public void ToString_ReturnsValue()
-        {
-            var valueObject = CreateValueObject(Range.Min);
-
-            Assert.AreEqual(Range.Min.ToString(), valueObject.ToString());
-        }
     }
 }

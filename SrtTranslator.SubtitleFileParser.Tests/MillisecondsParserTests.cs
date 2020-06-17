@@ -5,7 +5,7 @@ using System;
 
 namespace SrtTranslator.SubtitleFileParser.Tests
 {
-    using BoundedIntParser = BoundedIntValueObjectParser<MillisecondsTimestamp, SubcharacterLine>;
+    using BoundedIntParser = IntBasedValueObjectParser<MillisecondsTimestamp, SubcharacterLine>;
 
     [TestFixture]
     public class MillisecondsParserTests

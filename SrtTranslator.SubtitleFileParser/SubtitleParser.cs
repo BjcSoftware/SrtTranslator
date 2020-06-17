@@ -6,17 +6,24 @@ using System.Linq;
 
 namespace SrtTranslator.SubtitleFileParser
 {
+    using ISubtitleIdParser = IParser<SubtitleId, CharacterLine>;
     using ISubtitleTimestampsParser = IParser<SubtitleTimestamps, CharacterLine>;
 
     public class SubtitleParser : IParser<Subtitle, UnvalidatedSubtitle>
     {
+        private readonly ISubtitleIdParser subtitleIdParser;
         private readonly ISubtitleTimestampsParser timestampsParser;
 
-        public SubtitleParser(ISubtitleTimestampsParser timestampsParser)
+        public SubtitleParser(
+            ISubtitleIdParser subtitleIdParser,
+            ISubtitleTimestampsParser timestampsParser)
         {
+            if (subtitleIdParser == null)
+                throw new ArgumentNullException(nameof(subtitleIdParser));
             if (timestampsParser == null)
                 throw new ArgumentNullException(nameof(timestampsParser));
 
+            this.subtitleIdParser = subtitleIdParser;
             this.timestampsParser = timestampsParser;
         }
 
@@ -29,12 +36,14 @@ namespace SrtTranslator.SubtitleFileParser
                 throw new ParsingException("A subtitle should at least be 3 lines long");
 
             return new Subtitle(
-                ParseTimestamps(GetTimestampsLine(unvalidatedSubtitle)),
-                new SubtitleText(
-                    string.Join(
-                        '\n',
-                        GetTextLines(unvalidatedSubtitle)
-                        .Select(l => l.Value))));
+                subtitleIdParser.Parse(GetIdLine(unvalidatedSubtitle)),
+                timestampsParser.Parse(GetTimestampsLine(unvalidatedSubtitle)),
+                new SubtitleText(GetTextLines(unvalidatedSubtitle)));
+        }
+
+        private CharacterLine GetIdLine(UnvalidatedSubtitle subtitle)
+        {
+            return subtitle.Value.ElementAt(0);
         }
 
         private CharacterLine GetTimestampsLine(UnvalidatedSubtitle subtitle)
@@ -45,18 +54,6 @@ namespace SrtTranslator.SubtitleFileParser
         private List<CharacterLine> GetTextLines(UnvalidatedSubtitle subtitle)
         {
             return subtitle.Value.Skip(2).ToList();
-        }
-
-        private SubtitleTimestamps ParseTimestamps(CharacterLine line)
-        {
-            try
-            {
-                return timestampsParser.Parse(line);
-            }
-            catch(Exception)
-            {
-                throw new ParsingException();
-            }
         }
     }
 }
