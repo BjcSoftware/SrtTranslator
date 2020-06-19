@@ -1,8 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,7 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SrtTranslator.Core.Tests\SrtTranslator.Core.Tests.csproj" />
     <ProjectReference Include="..\SrtTranslator.Core\SrtTranslator.Core.csproj" />
-    <ProjectReference Include="..\SrtTranslator.SubtitleFileParser\SrtTranslator.SubtitleFileParser.csproj" />
+    <ProjectReference Include="..\SrtTranslator.DeepL\SrtTranslator.DeepL.csproj" />
   </ItemGroup>
 
 </Project>

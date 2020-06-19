@@ -19,9 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{BC7895D6-7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SrtTranslator.Core.Tests", "SrtTranslator.Core.Tests\SrtTranslator.Core.Tests.csproj", "{D4B8DF77-E7B3-4E99-9357-B37B9372A9C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SrtTranslator.SubtitleSerializer", "SrtTranslator.SubtitleSerializer\SrtTranslator.SubtitleSerializer.csproj", "{E6593A65-A095-4131-A05B-7934F4042936}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SrtTranslator.SubtitleSerializer", "SrtTranslator.SubtitleSerializer\SrtTranslator.SubtitleSerializer.csproj", "{E6593A65-A095-4131-A05B-7934F4042936}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SrtTranslator.SubtitleSerializer.Tests", "SrtTranslator.SubtitleSerializer.Tests\SrtTranslator.SubtitleSerializer.Tests.csproj", "{B8541C2E-2EBD-4B91-B215-CEB6474AB0C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SrtTranslator.SubtitleSerializer.Tests", "SrtTranslator.SubtitleSerializer.Tests\SrtTranslator.SubtitleSerializer.Tests.csproj", "{B8541C2E-2EBD-4B91-B215-CEB6474AB0C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SrtTranslator.DeepL", "SrtTranslator.DeepL\SrtTranslator.DeepL.csproj", "{FAF4013D-D484-485E-885D-927B4594A44E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeepL", "DeepL", "{F3DE3C76-0AC9-4999-963D-4930E32E5339}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SrtTranslator.DeepL.Tests", "SrtTranslator.DeepL.Tests\SrtTranslator.DeepL.Tests.csproj", "{EEFBC009-4A67-4740-8DEC-917D24B54474}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +63,14 @@ Global
 		{B8541C2E-2EBD-4B91-B215-CEB6474AB0C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8541C2E-2EBD-4B91-B215-CEB6474AB0C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8541C2E-2EBD-4B91-B215-CEB6474AB0C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAF4013D-D484-485E-885D-927B4594A44E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAF4013D-D484-485E-885D-927B4594A44E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAF4013D-D484-485E-885D-927B4594A44E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAF4013D-D484-485E-885D-927B4594A44E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEFBC009-4A67-4740-8DEC-917D24B54474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEFBC009-4A67-4740-8DEC-917D24B54474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEFBC009-4A67-4740-8DEC-917D24B54474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEFBC009-4A67-4740-8DEC-917D24B54474}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +82,8 @@ Global
 		{D4B8DF77-E7B3-4E99-9357-B37B9372A9C6} = {BC7895D6-72E0-42EF-94AF-EBF598F1F3F5}
 		{E6593A65-A095-4131-A05B-7934F4042936} = {4C7AB51F-C866-4408-B036-1389E658A00F}
 		{B8541C2E-2EBD-4B91-B215-CEB6474AB0C2} = {4C7AB51F-C866-4408-B036-1389E658A00F}
+		{FAF4013D-D484-485E-885D-927B4594A44E} = {F3DE3C76-0AC9-4999-963D-4930E32E5339}
+		{EEFBC009-4A67-4740-8DEC-917D24B54474} = {F3DE3C76-0AC9-4999-963D-4930E32E5339}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC829919-835D-4E22-AFD6-A33E41C69FA5}

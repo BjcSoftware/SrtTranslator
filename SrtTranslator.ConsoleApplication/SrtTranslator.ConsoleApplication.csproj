@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SrtTranslator.Core\SrtTranslator.Core.csproj" />
+    <ProjectReference Include="..\SrtTranslator.DeepL\SrtTranslator.DeepL.csproj" />
     <ProjectReference Include="..\SrtTranslator.SubtitleFileParser\SrtTranslator.SubtitleFileParser.csproj" />
     <ProjectReference Include="..\SrtTranslator.SubtitleSerializer\SrtTranslator.SubtitleSerializer.csproj" />
   </ItemGroup>
