@@ -9,7 +9,7 @@ using System.Linq;
 namespace SrtTranslator.Core.Translator.Tests
 {
     [TestFixture]
-    public class SrtTranslatorTests
+    public class SubtitlesTranslatorTests
     {
         [Test]
         public void Constructor_NullSubtitleTranslator_Throws()
@@ -17,7 +17,7 @@ namespace SrtTranslator.Core.Translator.Tests
             ISubtitleTranslator nullTranslator = null;
 
             Assert.Throws<ArgumentNullException>(
-                () => new SrtTranslator(nullTranslator));
+                () => new SubtitlesTranslator(nullTranslator));
         }
 
         [Test]
@@ -101,15 +101,15 @@ namespace SrtTranslator.Core.Translator.Tests
             Assert.AreEqual(expectedException, actualException);
         }
 
-        private SrtTranslator CreateSrtTranslator()
+        private SubtitlesTranslator CreateSrtTranslator()
         {
             return CreateSrtTranslator(
                 Substitute.For<ISubtitleTranslator>());
         }
 
-        private SrtTranslator CreateSrtTranslator(ISubtitleTranslator translator)
+        private SubtitlesTranslator CreateSrtTranslator(ISubtitleTranslator translator)
         {
-            return new SrtTranslator(translator);
+            return new SubtitlesTranslator(translator);
         }
 
         private SubtitleText CreateSubtitleText(string line)

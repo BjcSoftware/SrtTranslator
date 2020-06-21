@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace SrtTranslator.Core.Translator
 {
-    public class SrtTranslator : ISrtTranslator
+    public class SubtitlesTranslator : ISubtitlesTranslator
     {
         private readonly ISubtitleTranslator translator;
 
-        public SrtTranslator(ISubtitleTranslator translator)
+        public SubtitlesTranslator(ISubtitleTranslator translator)
         {
             if (translator == null)
                 throw new ArgumentNullException(nameof(translator));

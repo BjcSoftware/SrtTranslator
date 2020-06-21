@@ -33,8 +33,8 @@ namespace SrtTranslator.SubtitleFileParser
             var startAndEnd = line.Split(TimestampsSeparator);
 
             return new SubtitleTimestamps(
-                ParseTimestamp(startAndEnd[0]),
-                ParseTimestamp(startAndEnd[1]));
+                timestampParser.Parse(startAndEnd[0]),
+                timestampParser.Parse(startAndEnd[1]));
         }
 
         private bool InvalidFormat(CharacterLine line)
@@ -45,18 +45,6 @@ namespace SrtTranslator.SubtitleFileParser
                 return true;
 
             return false;
-        }
-
-        private Timestamp ParseTimestamp(SubcharacterLine toParse)
-        {
-            try
-            {
-                return timestampParser.Parse(toParse);
-            }
-            catch(Exception)
-            {
-                throw new ParsingException();
-            }
         }
     }
 }

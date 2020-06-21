@@ -1,4 +1,4 @@
-﻿namespace SrtTranslator.SubtitleSerializer
+﻿namespace SrtTranslator.Core
 {
     public interface IMapper<Destination, Source>
     {

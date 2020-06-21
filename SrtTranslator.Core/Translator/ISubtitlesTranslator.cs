@@ -1,6 +1,6 @@
 ﻿namespace SrtTranslator.Core.Translator
 {
-    public interface ISrtTranslator
+    public interface ISubtitlesTranslator
     {
         Subtitles Translate(
             Subtitles subtitles, 

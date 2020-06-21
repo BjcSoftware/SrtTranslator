@@ -72,7 +72,7 @@ namespace SrtTranslator.SubtitleFileParser.Tests
             var stubTimestampParser = Substitute.For<ITimestampParser>();
             stubTimestampParser
                 .Parse(Arg.Any<SubcharacterLine>())
-                .Throws(new Exception());
+                .Throws(new ParsingException());
 
             var parser = CreateParser(stubTimestampParser);
 
