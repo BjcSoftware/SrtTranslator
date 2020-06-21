@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
+using System.IO;
+using System.Linq;
 
 namespace SrtTranslator.Core.Tests
 {
@@ -28,7 +30,7 @@ namespace SrtTranslator.Core.Tests
         [Test]
         public void Constructor_ContainsInvalidPathCharacter_Throws()
         {
-            var invalidPath = "/a/path|/file.srt";
+            var invalidPath = $"/a/path|{Path.GetInvalidPathChars().First()}file.srt";
 
             Assert.Throws<ArgumentException>(
                 () => new FilePath(invalidPath));
