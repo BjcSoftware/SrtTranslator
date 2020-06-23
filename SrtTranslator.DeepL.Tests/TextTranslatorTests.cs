@@ -51,7 +51,7 @@ namespace SrtTranslator.DeepL.Tests
 
             var stubRequester = Substitute.For<IHttpTranslationRequester>();
             stubRequester
-                .Request("text to translate", Arg.Is(Language.French), Arg.Is(Language.English))
+                .Request("text to translate", Arg.Is(Language.French))
                 .Returns(successfulHttpResponse);
 
             var stubDeserializer = Substitute.For<IHttpTranslationResponseDeserializer>();
@@ -63,8 +63,7 @@ namespace SrtTranslator.DeepL.Tests
 
             var actualTranslation = translator.TranslateText(
                 "text to translate", 
-                Language.French, 
-                Language.English);
+                Language.French);
 
             Assert.AreEqual(
                 "texte à traduire",
@@ -78,7 +77,7 @@ namespace SrtTranslator.DeepL.Tests
             var translator = CreateTranslator();
 
             Assert.Throws<ArgumentNullException>(
-                () => translator.TranslateText(nullText, Language.French, Language.English));
+                () => translator.TranslateText(nullText, Language.French));
         }
 
         [Test]
@@ -88,7 +87,7 @@ namespace SrtTranslator.DeepL.Tests
         {
             var translator = CreateTranslator();
 
-            var actualTranslation = translator.TranslateText(emptyText, Language.French, Language.English);
+            var actualTranslation = translator.TranslateText(emptyText, Language.French);
 
             Assert.AreEqual(
                 string.Empty,
@@ -145,7 +144,7 @@ namespace SrtTranslator.DeepL.Tests
 
             var stubRequester = Substitute.For<IHttpTranslationRequester>();
             stubRequester
-                .Request(Arg.Is("text to translate"), Arg.Is(Language.French), Arg.Is(Language.English))
+                .Request(Arg.Is("text to translate"), Arg.Is(Language.French))
                 .Returns(forbiddenHttpResponse);
 
             return stubRequester;
@@ -155,7 +154,7 @@ namespace SrtTranslator.DeepL.Tests
             where T : Exception
         {
             Assert.Throws<T>(
-                () => translator.TranslateText("text to translate", Language.French, Language.English));
+                () => translator.TranslateText("text to translate", Language.French));
         }
 
         private TextTranslator CreateTranslator()

@@ -23,8 +23,7 @@ namespace SrtTranslator.Core.Translator
 
         public Subtitle Translate(
             Subtitle subtitle, 
-            Language target, 
-            Language source)
+            Language target)
         {
             if (subtitle == null)
                 throw new ArgumentNullException(nameof(subtitle));
@@ -34,22 +33,19 @@ namespace SrtTranslator.Core.Translator
                 subtitle.Timestamps,
                 TranslateSubtitleText(
                     subtitle.Text,
-                    target,
-                    source));
+                    target));
         }
 
         private SubtitleText TranslateSubtitleText(
             SubtitleText textLines,
-            Language target,
-            Language source)
+            Language target)
         {
             return new SubtitleText(
                 new List<CharacterLine> {
                     new CharacterLine(
                         translator.TranslateText(
                             formatter.Format(textLines), 
-                            target, 
-                            source))
+                            target))
                 });
         }
     }

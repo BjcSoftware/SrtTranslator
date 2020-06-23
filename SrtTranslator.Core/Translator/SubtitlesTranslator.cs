@@ -17,8 +17,7 @@ namespace SrtTranslator.Core.Translator
 
         public Subtitles Translate(
             Subtitles subtitles, 
-            Language target, 
-            Language source)
+            Language target)
         {
             if (subtitles == null)
                 throw new ArgumentNullException(nameof(subtitles));
@@ -26,7 +25,7 @@ namespace SrtTranslator.Core.Translator
             return new Subtitles(
                 subtitles.Value
                 .Select(
-                    s => translator.Translate(s, target, source))
+                    s => translator.Translate(s, target))
                 .ToList());
         }
     }

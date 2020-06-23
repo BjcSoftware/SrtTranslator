@@ -26,7 +26,7 @@ namespace SrtTranslator.DeepL
             this.mapper = mapper;
         }
 
-        public HttpResponseMessage Request(string textToTranslate, Language target, Language source)
+        public HttpResponseMessage Request(string textToTranslate, Language target)
         {
             using (var client = new HttpClient())
             {
@@ -37,8 +37,7 @@ namespace SrtTranslator.DeepL
                 var Parameters = new List<KeyValuePair<string, string>> {
                     new KeyValuePair<string, string>("auth_key", key.Value),
                     new KeyValuePair<string, string>("text", textToTranslate),
-                    new KeyValuePair<string, string>("target_lang", $"{mapper.CodeAssociatedTo(target)}"),
-                    new KeyValuePair<string, string>("source_lang", $"{mapper.CodeAssociatedTo(source)}")
+                    new KeyValuePair<string, string>("target_lang", $"{mapper.CodeAssociatedTo(target)}")
                 };
 
                 var Request = new HttpRequestMessage(HttpMethod.Post, apiUrl) {

@@ -4,7 +4,6 @@
     {
         string TranslateText(
             string text, 
-            Language target, 
-            Language source);
+            Language target);
     }
 }

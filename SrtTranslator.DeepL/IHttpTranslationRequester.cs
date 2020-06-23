@@ -7,7 +7,6 @@ namespace SrtTranslator.DeepL
     {
         HttpResponseMessage Request(
             string textToTranslate, 
-            Language target, 
-            Language source);
+            Language target);
     }
 }

@@ -60,7 +60,7 @@ namespace SrtTranslator.Core.Translator.Tests
 
             var stubTranslator = Substitute.For<ITextTranslator>();
             stubTranslator
-                .TranslateText(Arg.Is("formatted text"), Language.French, Language.English)
+                .TranslateText(Arg.Is("formatted text"), Language.French)
                 .Returns("première ligne deuxième ligne");
 
             var stubFormatter = Substitute.For<ISubtitleTextFormatter>();
@@ -70,7 +70,7 @@ namespace SrtTranslator.Core.Translator.Tests
 
             var translator = CreateSubtitleTranslator(stubTranslator, stubFormatter);
 
-            var actualTranslation = translator.Translate(toTranslate, Language.French, Language.English);
+            var actualTranslation = translator.Translate(toTranslate, Language.French);
 
             Assert.AreEqual(
                 expectedTranslation,
@@ -84,7 +84,7 @@ namespace SrtTranslator.Core.Translator.Tests
             var translator = CreateSubtitleTranslator();
 
             Assert.Throws<ArgumentNullException>(
-                () => translator.Translate(nullSubtitle, Language.French, Language.English));
+                () => translator.Translate(nullSubtitle, Language.French));
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace SrtTranslator.Core.Translator.Tests
             var stubTextTranslator = Substitute.For<ITextTranslator>();
             var expectedException = new Exception();
             stubTextTranslator
-                .TranslateText(Arg.Any<string>(), Arg.Any<Language>(), Arg.Any<Language>())
+                .TranslateText(Arg.Any<string>(), Arg.Any<Language>())
                 .Throws(expectedException);
 
             var srtTranslator = CreateSubtitleTranslator(stubTextTranslator);
@@ -101,7 +101,7 @@ namespace SrtTranslator.Core.Translator.Tests
             var stubSubtitle = SubtitleTests.CreateSubtitle1();
 
             var actualException = Assert.Throws<Exception>(() =>
-                srtTranslator.Translate(stubSubtitle, Language.French, Language.English));
+                srtTranslator.Translate(stubSubtitle, Language.French));
             Assert.AreEqual(expectedException, actualException);
         }
 

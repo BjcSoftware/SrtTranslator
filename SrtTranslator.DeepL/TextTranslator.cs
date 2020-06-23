@@ -30,7 +30,7 @@ namespace SrtTranslator.DeepL
             this.key = key;
         }
 
-        public string TranslateText(string textToTranslate, Language target, Language source)
+        public string TranslateText(string textToTranslate, Language target)
         {
             if (textToTranslate == null)
                 throw new ArgumentNullException(nameof(textToTranslate));
@@ -38,7 +38,7 @@ namespace SrtTranslator.DeepL
             if (textToTranslate.Trim() == string.Empty)
                 return string.Empty;
 
-            var response = httpRequester.Request(textToTranslate, target, source);
+            var response = httpRequester.Request(textToTranslate, target);
 
             if (response.IsSuccessStatusCode)
                 return deserializer.DeserializeTranslation(response);

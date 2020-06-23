@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SrtTranslator.DeepL", "SrtT
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeepL", "DeepL", "{F3DE3C76-0AC9-4999-963D-4930E32E5339}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SrtTranslator.DeepL.Tests", "SrtTranslator.DeepL.Tests\SrtTranslator.DeepL.Tests.csproj", "{EEFBC009-4A67-4740-8DEC-917D24B54474}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SrtTranslator.DeepL.Tests", "SrtTranslator.DeepL.Tests\SrtTranslator.DeepL.Tests.csproj", "{EEFBC009-4A67-4740-8DEC-917D24B54474}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SrtTranslator.ConsoleApplication.Tests", "SrtTranslator.ConsoleApplication.Tests\SrtTranslator.ConsoleApplication.Tests.csproj", "{95737A53-0DD2-4F09-8BBA-6AC2450F1F4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{EEFBC009-4A67-4740-8DEC-917D24B54474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEFBC009-4A67-4740-8DEC-917D24B54474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEFBC009-4A67-4740-8DEC-917D24B54474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95737A53-0DD2-4F09-8BBA-6AC2450F1F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95737A53-0DD2-4F09-8BBA-6AC2450F1F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95737A53-0DD2-4F09-8BBA-6AC2450F1F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95737A53-0DD2-4F09-8BBA-6AC2450F1F4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,7 +4,6 @@
     {
         Subtitles Translate(
             Subtitles subtitles, 
-            Language target, 
-            Language source);
+            Language target);
     }
 }

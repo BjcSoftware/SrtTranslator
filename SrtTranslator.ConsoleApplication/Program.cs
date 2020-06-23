@@ -1,11 +1,9 @@
 ﻿using SrtTranslator.Core;
 using SrtTranslator.Core.Translator;
 using SrtTranslator.DeepL;
-using SrtTranslator.SubtitleFileParser;
-using SrtTranslator.SubtitleFileParser.Exceptions;
-using SrtTranslator.SubtitleSerializer;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SrtTranslator.ConsoleApplication
 {
@@ -13,104 +11,74 @@ namespace SrtTranslator.ConsoleApplication
     {
         static void Main(string[] args)
         {
-            var parser = CreateSubtitlesParser();
-
-            Console.Write("Srt file path: ");
-            var path = new FilePath(Console.ReadLine());
-
-            Subtitles subtitles;
-            try
+            if(InvalidInputArgs(args))
             {
-                subtitles = parser.Parse(path);
-                var costCalculator = CreateDeepLCostCalculator();
-                Console.WriteLine($"Translation cost = {costCalculator.Calculate(subtitles, Currency.Euro)}");
-
-                Console.WriteLine("Do you wan't to translate the subtitles ?");
-                var answer = Console.ReadLine();
-
-                if(answer.Equals("yes"))
-                {
-                    Console.WriteLine("Please enter your DeepL authentication key: ");
-                    var key = new AuthenticationKey(Console.ReadLine());
-                    var subtitlesTranslator = CreateDeeplSubtitlesTranslator(key);
-
-                    var translatedSubtitles = subtitlesTranslator.Translate(subtitles, Language.French, Language.English);
-
-                    var serializer = CreateSerializer();
-                    serializer.Serialize(translatedSubtitles, new FilePath("translation.srt"));
-                }
-            }
-            catch(SubtitlesParsingException e)
-            {
-                Console.WriteLine(e.IncorrectSubtitleId);
+                ShowHelp();
                 return;
             }
-        }
 
-        private static ISubtitlesTranslator CreateDeeplSubtitlesTranslator(AuthenticationKey authKey)
-        {
-            return new SubtitlesTranslator(
-                new SubtitleTranslator(
-                    CreateDeeplTextTranslator(authKey),
-                    new SingleLineSubtitleTextFormatter()));
-        }
+            var srtFileToTranslate = new FilePath(args[0]);
+            Language targetLanguage = ParseLanguage(args[2]);
+            var outputFile = new FilePath(args[4]);
+            var authKey = new AuthenticationKey(args[6]);
 
-        private static ITextTranslator CreateDeeplTextTranslator(AuthenticationKey authKey)
-        {
-            var textTranslator = new TextTranslator(
-                new HttpTranslationRequester(
-                    authKey,
-                    new LanguageToCodeMapper(
-                        new Dictionary<Language, string>
-                        {
-                            [Language.French] = "FR",
-                            [Language.English] = "EN"
-                        })),
-                new JsonHttpTranslationResponseDeserializer(),
+            TranslateSubtitles(
+                srtFileToTranslate,
+                targetLanguage,
+                outputFile,
                 authKey);
-
-            return textTranslator;
         }
 
-        private static SubtitlesFileParser CreateSubtitlesParser()
+        private static void TranslateSubtitles(
+            FilePath toTranslate,
+            Language targetLanguage,
+            FilePath outputFile,
+            AuthenticationKey authKey)
         {
-            var intParser = new IntParser<SubcharacterLine>();
+            var translator = AppComposer.CreateDeeplSubtitlesFileTranslator(authKey);
 
-            return new SubtitlesFileParser(
-                new UnvalidatedSubtitlesFileReader(
-                    new FileLineReader()),
-                new SubtitlesParser(
-                    new SubtitleParser(
-                        new IntBasedValueObjectParser<SubtitleId, CharacterLine>(new IntParser<CharacterLine>()),
-                        new SubtitleTimestampsParser(
-                            new TimestampParser(
-                                new IntBasedValueObjectParser<HoursTimestamp, SubcharacterLine>(intParser),
-                                new IntBasedValueObjectParser<MinutesTimestamp, SubcharacterLine>(intParser),
-                                new IntBasedValueObjectParser<SecondsTimestamp, SubcharacterLine>(intParser),
-                                new MillisecondsParser(
-                                    new IntBasedValueObjectParser<MillisecondsTimestamp, SubcharacterLine>(intParser)),
-                                new TimestampFormatValidator())))));
+            translator.Execute(
+                new TranslateSubtitlesFileToNewFile(
+                    toTranslate,
+                    targetLanguage,
+                    outputFile));
         }
 
-        private static SubtitlesTranslationCostCalculator CreateDeepLCostCalculator()
+        private static List<string> AvailableLanguages =
+            Enum.GetValues(typeof(Language))
+                .Cast<Language>()
+                .Select(v => v.ToString().ToLower())
+                .ToList();
+
+        private static bool InvalidInputArgs(string[] args)
         {
-            return new SubtitlesTranslationCostCalculator(
-                new InMemoryCostForOneMillionCharactersProvider(
-                    new Dictionary<Currency, decimal>() {
-                        [Currency.Euro] = 20m,
-                        [Currency.US_Dollar] = 25m,
-                        [Currency.CA_Dollar] = 30.03m
-                    }),
-                new SingleLineSubtitleTextFormatter());
+            return args.Length != 7 ||
+                args[1] != "-t" || args[3] != "-o" || args[5] != "-k" ||
+                !AvailableLanguages.Contains(args[2].ToLower());
         }
 
-        private static SubtitlesSerializer CreateSerializer()
+        private static void ShowHelp()
         {
-            return new SubtitlesSerializer(
-                new FileLineWriter(),
-                new SubtitlesToUnvalidatedMapper(
-                    new SubtitleToUnvalidatedMapper(
-                        new SubtitleTimestampsToCharacterLineMapper())));
+            Console.WriteLine();
+            Console.WriteLine("usage: SrtTranslator file_to_translate.srt -t TARGET_LANG -o OUTPUT_FILE -k AUTH_KEY");
+            Console.WriteLine();
+            Console.WriteLine("TARGET_LANG must be one of the following languages:");
+            foreach (var language in AvailableLanguages)
+            {
+                Console.WriteLine($"\t- {language}");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("OUTPUT_FILE is the output file containing the translation.");
+            Console.WriteLine();
+            Console.WriteLine("AUTH_KEY is your authentication key for the API of DeepL, in the following format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.");
+            Console.WriteLine();
+        }
+
+        private static Language ParseLanguage(string input)
+        {
+            string titleCaseInput = $"{char.ToUpper(input[0])}{string.Join("", input.Skip(1))}";
+            return Enum.Parse<Language>(titleCaseInput);
         }
     }
 }
