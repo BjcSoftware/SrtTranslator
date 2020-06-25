@@ -1,9 +1,8 @@
 ﻿using NUnit.Framework;
 using SrtTranslator.Core.Translation;
-using SrtTranslator.Core.Translator;
 using System;
 
-namespace SrtTranslator.Core.Tests.Translator
+namespace SrtTranslator.Core.Translator.Tests
 {
     [TestFixture]
     public class PriceTests

@@ -92,5 +92,13 @@ namespace SrtTranslator.Core.Tests
                     TimestampTests.CreateTimestamp(10, 0, 5, 0)),
                 CreateSingleLineText("Subtitle2"));
         }
+
+        public static Subtitle CopyWithNewText(Subtitle subtitle, string text)
+        {
+            return new Subtitle(
+                subtitle.Id,
+                subtitle.Timestamps,
+                CreateSingleLineText(text));
+        }
     }
 }

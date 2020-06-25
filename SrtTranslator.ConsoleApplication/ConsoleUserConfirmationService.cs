@@ -8,9 +8,9 @@ namespace SrtTranslator.ConsoleApplication
         public Answer AskForConfirmation(string prompt)
         {
             Console.Write($"{prompt} (yes/no) ");
-            string answer = Console.ReadLine().ToLower();
+            string answer = Console.ReadLine();
 
-            return answer == "yes" ? Answer.Yes : Answer.No;
+            return answer.ToLower() == "yes" ? Answer.Yes : Answer.No;
         }
     }
 }

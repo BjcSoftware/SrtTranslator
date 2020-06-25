@@ -35,7 +35,7 @@ namespace SrtTranslator.ConsoleApplication
             FilePath outputFile,
             AuthenticationKey authKey)
         {
-            var translator = AppComposer.CreateDeeplSubtitlesFileTranslator(authKey);
+            var translator = AppComposer.CreateDeeplBatchSubtitlesFileTranslator(authKey);
 
             translator.Execute(
                 new TranslateSubtitlesFileToNewFile(

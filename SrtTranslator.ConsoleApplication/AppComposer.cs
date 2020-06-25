@@ -4,12 +4,32 @@ using SrtTranslator.DeepL;
 using SrtTranslator.SubtitleFileParser;
 using SrtTranslator.SubtitleSerializer;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace SrtTranslator.ConsoleApplication
 {
     public static class AppComposer
     {
-        public static ICommandService<TranslateSubtitlesFileToNewFile> CreateDeeplSubtitlesFileTranslator(
+        private static HttpClient httpClient = new HttpClient();
+
+        private static string deeplTranslationApiUrl = "https://api.deepl.com/v2/translate";
+        private static LanguageToCodeMapper deeplLanguageToCodeMapper = new LanguageToCodeMapper(
+            new Dictionary<Language, string> {
+                [Language.German] = "DE",
+                [Language.English] = "EN",
+                [Language.French] = "FR",
+                [Language.Italian] = "IT",
+                [Language.Japanese] = "JA",
+                [Language.Spanish] = "ES",
+                [Language.Dutch] = "NL",
+                [Language.Polish] = "PL",
+                [Language.Portuguese] = "PT-PT",
+                [Language.Portuguese_Brazilian] = "PT-BR",
+                [Language.Russian] = "RU",
+                [Language.Chinese] = "ZH"
+            });
+
+        public static ICommandService<TranslateSubtitlesFileToNewFile> CreateDeeplBatchSubtitlesFileTranslator(
             AuthenticationKey authKey)
         {
             return new ErrorHandlerSubtitlesFileTranslator(
@@ -17,7 +37,7 @@ namespace SrtTranslator.ConsoleApplication
                     new SubtitlesFileTranslator(
                         CreateSubtitlesParser(),
                         CreateSubtitlesSerializer(),
-                        CreateDeeplSubtitlesTranslator(authKey),
+                        CreateDeeplBatchSubtitlesTranslator(authKey),
                         new SubtitlesSuccessfullyTranslatedUserNotifier(
                             new ConsoleUserNotifier())),
                     CreateDeeplSubtitlesFileTranslationCostCalculator(),
@@ -74,36 +94,28 @@ namespace SrtTranslator.ConsoleApplication
                         new SubtitleTimestampsToCharacterLineMapper())));
         }
 
-        private static ISubtitlesTranslator CreateDeeplSubtitlesTranslator(AuthenticationKey authKey)
+        private static ISubtitlesTranslator CreateDeeplBatchSubtitlesTranslator(AuthenticationKey authKey)
         {
-            return new SubtitlesTranslator(
-                new SubtitleTranslator(
-                    CreateDeeplTextTranslator(authKey),
-                    new SingleLineSubtitleTextFormatter()));
+            const int deeplMaxBatchSize = 50;
+
+            return new BatchSubtitlesTranslator(
+                new SubtitleBatchTranslator(
+                    CreateDeeplBatchTextTranslator(authKey),
+                    new SingleLineSubtitleTextFormatter()),
+                deeplMaxBatchSize);
         }
 
-        private static ITextTranslator CreateDeeplTextTranslator(AuthenticationKey authKey)
+        private static IBatchTextTranslator CreateDeeplBatchTextTranslator(AuthenticationKey authKey)
         {
-            var textTranslator = new TextTranslator(
-                new HttpTranslationRequester(
-                    authKey,
-                    new LanguageToCodeMapper(
-                        new Dictionary<Language, string>
-                        {
-                            [Language.German] = "DE",
-                            [Language.English] = "EN",
-                            [Language.French] = "FR",
-                            [Language.Italian] = "IT",
-                            [Language.Japanese] = "JA",
-                            [Language.Spanish] = "ES",
-                            [Language.Dutch] = "NL",
-                            [Language.Polish] = "PL",
-                            [Language.Portuguese] = "PT-PT",
-                            [Language.Portuguese_Brazilian] = "PT-BR",
-                            [Language.Russian] = "RU",
-                            [Language.Chinese] = "ZH"
-                        })),
-                new JsonHttpTranslationResponseDeserializer(),
+            var textTranslator = new RestApiBatchTextTranslator(
+                new HttpBatchTranslationRequestSender(
+                    new ApiHttpRequestSender(httpClient),
+                    new HttpBatchTranslationRequestGenerator(
+                        deeplTranslationApiUrl,
+                        new HttpBatchTranslationRequestContentGenerator(
+                            authKey,
+                            deeplLanguageToCodeMapper))),
+                new JsonHttpBatchTranslationResponseDeserializer(),
                 authKey);
 
             return textTranslator;

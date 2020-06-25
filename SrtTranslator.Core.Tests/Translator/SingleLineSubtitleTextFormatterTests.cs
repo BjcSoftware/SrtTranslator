@@ -1,9 +1,8 @@
 ﻿using NUnit.Framework;
-using SrtTranslator.Core.Translator;
 using System;
 using System.Collections.Generic;
 
-namespace SrtTranslator.Core.Tests.Translator
+namespace SrtTranslator.Core.Translator.Tests
 {
     [TestFixture]
     public class SingleLineSubtitleTextFormatterTests
