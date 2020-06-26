@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SrtTranslator.DeepL.Exceptions;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -25,7 +26,14 @@ namespace SrtTranslator.DeepL
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
 
-            return client.SendAsync(request).Result;
+            try
+            {
+                return client.SendAsync(request).Result;
+            }
+            catch(AggregateException)
+            {
+                throw new InternetAccessException();
+            }
         }
     }
 }

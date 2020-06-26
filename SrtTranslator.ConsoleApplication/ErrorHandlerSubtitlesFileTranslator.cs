@@ -47,6 +47,10 @@ namespace SrtTranslator.ConsoleApplication
             {
                 notifier.Notify($"Unable to parse the file \"{command.ToTranslate}\" because of a problem in the subtitle number {e.IncorrectSubtitleId}.");
             }
+            catch(InternetAccessException)
+            {
+                notifier.Notify("Unable to reach the DeepL API. Please check your internet access.");
+            }
         }
     }
 }
